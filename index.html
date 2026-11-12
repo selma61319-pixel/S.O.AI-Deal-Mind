@@ -3,26 +3,47 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>S.O.AI Deal Mind</title>
+<title>Deal Mind</title>
 <style>
-body{font-family:Arial;background:#fff5f7;text-align:center;padding:30px}
+body{font-family:Arial;background:#ffeef5;margin:0;padding:20px;text-align:center}
 h1{color:#d63384}
-.box{background:white;padding:20px;border-radius:15px;margin:15px}
-button{background:#d63384;color:white;border:none;padding:12px 20px;border-radius:10px;font-size:16px}
+.card{background:white;border-radius:20px;padding:20px;margin:15px 0}
+button{background:#ff4d8d;color:white;border:none;padding:15px 25px;border-radius:30px;font-size:18px;width:100%}
+input{width:90%;padding:12px;border-radius:20px;border:1px solid #ddd;margin:10px 0}
+#answer{background:#fff0f6;padding:15px;border-radius:15px;min-height:60px}
 </style>
 </head>
 <body>
-<h1>S.O.AI Deal Mind</h1>
-<p>Voice-first AI lifestyle copilot</p>
-<div class="box">
-<h2>هنلبس ايه يوم الأحد؟</h2>
-<p>اكتبي: عندي فرح / خروجة / شغل</p>
-<button>اسألي Deal Mind بالصوت 🎤</button>
+<h1>💖 Deal Mind</h1>
+<p>هنلبس ايه يوم الأحد؟ اسألي Deal Mind بالصوت</p>
+<div class="card">
+<button onclick="startVoice()">🎤 اسألي Deal Mind بالصوت</button>
+<p id="heard">دوسي واتكلمي...</p>
+<div id="answer">هنا هيرد عليكي ❤️</div>
 </div>
-<div class="box">
-<h2>الصالون</h2>
-<p>احجزي، وافتكري معادك، وشوفي شكلك قبل وبعد</p>
+<div class="card"><h3>💅 الصالون</h3><p>لما تدخلي الصالون، اختاري الشوز اللي مع حقيبتك</p></div>
+<div class="card"><h3>✍️ اكتبي هنا</h3>
+<input id="txt" placeholder="اكتبي مثلا: عندي فرح...">
+<button onclick="reply(document.getElementById('txt').value)">ابعت</button>
 </div>
-<p>By Selma</p>
+<script>
+function reply(text){
+  document.getElementById('heard').innerText="سمعتك: "+text;
+  let a=document.getElementById('answer');
+  if(text.includes("فرح")) a.innerText="ياااه فرح! البسي فستان بينك فاتح وشوز نود، وشعرك ويفي، هتبقي قمر ❤️";
+  else if(text.includes("شغل")) a.innerText="للشغل البسي بنطلون اسود وبلوزة بيضا وشوز مريح، شيك وراقي.";
+  else if(text.includes("خروجة")) a.innerText="للخروجة البسي جينز وتيشيرت ابيض وسنيكرز، خفيفة وقمر.";
+  else if(text.includes("صالون")) a.innerText="في الصالون اختاري الشوز اللي يليق مع شنطتك، ومتتوتريش خالص.";
+  else a.innerText="فهمتك يا قلبي! البسي اللي يريحك ويخليكي واثقة، انتي قمر في كل حاجة ❤️";
+}
+function startVoice(){
+  let SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+  if(!SR){alert("اكتبي بدل ما تتكلمي");return;}
+  let r=new SR(); r.lang="ar-EG";
+  document.getElementById('heard').innerText="بسمعك... اتكلمي ❤️";
+  r.start();
+  r.onresult=function(e){reply(e.results[0][0].transcript)};
+}
+</script>
 </body>
 </html>
